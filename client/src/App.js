@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import WebFont from "webfontloader";
-import Layout from "./components/Layout";
-import Gallery from "./components/Gallery";
+import Layout from "./components/layout/Layout";
+import Gallery from "./components/Art";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import NotFound from "./components/404";
@@ -11,6 +11,9 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Privacy from "./components/Privacy";
 import Help from "./components/Help";
+import Art from "./components/Art";
+
+import ScrollToTop from "./components/layout/ScrollToTop";
 
 WebFont.load({
   typekit: {
@@ -27,17 +30,27 @@ const GlobalStyling = createGlobalStyle`
 
   html {
     font-size: 10px;
-/* height: 100vh; */
+    height: 100%;
+    width: 100%;
+
   }
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
   
   body {
-  /* height: 100%; */
+  width: 100%;
+  height: 100%;
     margin: 0;
     padding: 0;
     font-family: alegreya, serif;
     font-size: 1.6rem;
     color: #1b1b1b;
     font-weight: 700;
+
   }
 
   h1, h2, h3, h4 {
@@ -75,9 +88,10 @@ function App() {
   return (
     <Router>
       <GlobalStyling />
+      <ScrollToTop />
       <Layout>
         <Switch>
-          <Route exact path="/" component={Gallery} />
+          <Route exact path="/" component={Art} />
           <Route exact path="/about" component={About} />
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/privacy" component={Privacy} />

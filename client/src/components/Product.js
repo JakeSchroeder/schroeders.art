@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 // import test_src from "../img/painting1.png";
+import Colors from "./utils/Colors";
 
 const ProductWrapper = styled.div`
   min-width: 300px;
@@ -8,15 +9,14 @@ const ProductWrapper = styled.div`
   /* border: 1px solid #b72a2a; */
   display: flex;
   flex-direction: column;
-  padding-right: 32px;
-  padding-bottom: 32px;
+  padding: 16px;
   flex: 1;
 `;
 
 const ProductFooter = styled.div`
   /* height: 40px; */
   width: 100%;
-  border-top: 1px solid #554848;
+  /* border-top: 1px solid #554848; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,13 +34,14 @@ const ProductPrice = styled.p`
 
 const ProductImageWrapper = styled.div`
   position: relative;
+  border: 18px solid #343535;
+  box-shadow: -4px 4px 8px -2px rgba(0, 0, 0, 0.77);
   /* cursor: pointer; */
 `;
 
 const ProductImage = styled.img`
   display: block;
   width: 100%;
-  box-shadow: -4px 4px 8px -2px rgba(0, 0, 0, 0.77);
 `;
 
 const ProductOverlay = styled.div`
@@ -78,7 +79,7 @@ const StyledButton = styled.button`
   cursor: pointer;
   margin-bottom: 16px;
   border: 1px solid ${({ outline }) => (outline ? `#b72a2a` : `#554848`)};
-
+  color: ${Colors.White};
   &:hover {
     text-decoration: underline;
   }
