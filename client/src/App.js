@@ -47,7 +47,7 @@ const GlobalStyling = createGlobalStyle`
     margin: 0;
     padding: 0;
     font-family: alegreya, serif;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     color: #1b1b1b;
     font-weight: 700;
 

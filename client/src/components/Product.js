@@ -34,7 +34,7 @@ const ProductPrice = styled.p`
 
 const ProductImageWrapper = styled.div`
   position: relative;
-  border: 18px solid #343535;
+  border: 18px solid ${Colors.Gray};
   box-shadow: -4px 4px 8px -2px rgba(0, 0, 0, 0.77);
   /* cursor: pointer; */
 `;
