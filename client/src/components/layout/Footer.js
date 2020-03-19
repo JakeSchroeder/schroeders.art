@@ -65,6 +65,7 @@ const CopyRight = styled.p``;
 const Footer = () => (
   <FooterWrapper>
     <FooterInner>
+      <CopyRight>© Schroeders Art Inc. All rights reserved.</CopyRight>
       <List>
         <ListItem>
           <ListLink exact to="/privacy" activeClassName="is-active">
@@ -76,9 +77,29 @@ const Footer = () => (
             Help
           </ListLink>
         </ListItem>
+        <ListItem>
+          <ListLink exact to="/about" activeClassName="is-active">
+            About
+          </ListLink>
+        </ListItem>
+        <ListItem>
+          <ListLink exact to="/contact" activeClassName="is-active">
+            Contact
+          </ListLink>
+        </ListItem>
       </List>
-      <CopyRight>© Schroeders Art Inc. All rights reserved.</CopyRight>
+
       <List>
+        <ListItem>
+          <ListLink exact to="/login" activeClassName="is-active">
+            Login
+          </ListLink>
+        </ListItem>
+        <ListItem>
+          <ListLink exact to="/register" activeClassName="is-active">
+            Register
+          </ListLink>
+        </ListItem>
         <ListItem>
           <ListLink exact to="/">
             Track Order

@@ -1,18 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-//const passport = require("passport");
+const passport = require("passport");
 const path = require("path");
 
-// const users = require("./routes/api/users");
-// const products = require("./routes/api/products");
+const users = require("./routes/api/users");
+const products = require("./routes/api/products");
 
 const app = express();
 
 // Bodyparser middleware
 app.use(
   bodyParser.urlencoded({
-    extended: false
+    extended: true
   })
 );
 app.use(bodyParser.json());
@@ -26,19 +26,15 @@ mongoose
   .then(() => console.log("MongoDB successfully connected"))
   .catch(err => console.log(err));
 
-// // Passport middleware
-// app.use(passport.initialize());
+// Passport middleware
+app.use(passport.initialize());
 
-// // Passport config
-// require("./config/passport")(passport);
+// Passport config
+require("./config/passport")(passport);
 
-// // Routes
-// app.use("/api/users", users);
-// app.use("/api/products", products);
-
-app.get("/test", (req, res) => {
-  res.json("Hello World this is a test");
-});
+// Routes
+app.use("/api/users", users);
+app.use("/api/products", products);
 
 // Serve static assets (build folder) if in production
 if (process.env.NODE_ENV === "production") {

@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import { NavLink, withRouter } from "react-router-dom";
+import { logoutUser } from "../../actions/authActions";
 
 import logo_src from "../../img/logo.png";
 
@@ -112,56 +114,82 @@ const ItemIndicator = styled.div`
   margin-left: 4px;
 `;
 
-const Header = () => (
-  <HeaderWrapper>
-    <HeaderWrapperInner>
-      <Nav>
-        <List>
-          <ListItem>
-            <ListLink exact to="/" activeClassName="is-active">
-              Art
-            </ListLink>
-          </ListItem>
-          <ListItem>
-            <ListLink exact to="/about" activeClassName="is-active">
-              About
-            </ListLink>
-          </ListItem>
-          <ListItem>
-            <ListLink exact to="/contact" activeClassName="is-active">
-              Contact
-            </ListLink>
-          </ListItem>
-        </List>
-      </Nav>
+const Header = props => {
+  const onLogout = e => {
+    e.preventDefault();
+    props.logoutUser(props.history);
+    window.location.href = "/";
+  };
 
-      <HeaderLogoWrapper>
-        <ListLink exact to="/">
-          <HeaderLogo src={logo_src} alt="Schroeder's Art Logo" />
-        </ListLink>
-      </HeaderLogoWrapper>
-
-      <RightNav>
+  return (
+    <HeaderWrapper>
+      <HeaderWrapperInner>
         <Nav>
           <List>
             <ListItem>
-              <ListLink exact to="/login" activeClassName="is-active">
-                Login
+              <ListLink exact to="/" activeClassName="is-active">
+                Art
               </ListLink>
             </ListItem>
             <ListItem>
-              <CartWrapper>
-                <ListLink exact to="/cart" activeClassName="is-active">
-                  Cart
-                </ListLink>
-                <ItemIndicator>10</ItemIndicator>
-              </CartWrapper>
+              <ListLink exact to="/about" activeClassName="is-active">
+                About
+              </ListLink>
+            </ListItem>
+            <ListItem>
+              <ListLink exact to="/contact" activeClassName="is-active">
+                Contact
+              </ListLink>
             </ListItem>
           </List>
         </Nav>
-      </RightNav>
-    </HeaderWrapperInner>
-  </HeaderWrapper>
-);
 
-export default Header;
+        <HeaderLogoWrapper>
+          <ListLink exact to="/">
+            <HeaderLogo src={logo_src} alt="Schroeder's Art Logo" />
+          </ListLink>
+        </HeaderLogoWrapper>
+
+        <RightNav>
+          <Nav>
+            <List>
+              {props.auth.isAuthenticated ? (
+                <ListItem>
+                  <ListLink
+                    exact
+                    to="#"
+                    activeClassName="is-active"
+                    onClick={onLogout}
+                  >
+                    Logout
+                  </ListLink>
+                </ListItem>
+              ) : (
+                <ListItem>
+                  <ListLink exact to="/login" activeClassName="is-active">
+                    Login
+                  </ListLink>
+                </ListItem>
+              )}
+
+              <ListItem>
+                <CartWrapper>
+                  <ListLink exact to="/cart" activeClassName="is-active">
+                    Cart
+                  </ListLink>
+                  <ItemIndicator>0</ItemIndicator>
+                </CartWrapper>
+              </ListItem>
+            </List>
+          </Nav>
+        </RightNav>
+      </HeaderWrapperInner>
+    </HeaderWrapper>
+  );
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { logoutUser })(withRouter(Header));

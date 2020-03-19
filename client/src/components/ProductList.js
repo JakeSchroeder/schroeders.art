@@ -7,18 +7,19 @@ const ProductListWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-const ProductList = ({ data }) => {
-  const products = data;
-  const productItems = products.map(product => (
-    <Product
-      key={product.title}
-      img={product.img_src}
-      title={product.title}
-      price={product.price}
-    />
-  ));
-
-  return <ProductListWrapper>{productItems}</ProductListWrapper>;
+const ProductList = ({ productsToShow }) => {
+  return (
+    <ProductListWrapper>
+      {productsToShow.map(product => (
+        <Product
+          key={product._id}
+          img={product.img_src}
+          title={product.title}
+          price={product.price}
+        />
+      ))}
+    </ProductListWrapper>
+  );
 };
 
 export default ProductList;
