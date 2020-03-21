@@ -1,8 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import styled from "styled-components";
 // import test_src from "../img/painting1.png";
 import Colors from "./utils/Colors";
-
+import { addToCart } from "../actions/cartActions";
 const ProductWrapper = styled.div`
   min-width: 300px;
 
@@ -61,13 +63,23 @@ const ProductOverlay = styled.div`
 `;
 
 const ActionWrapper = styled.div`
+  width: 100%;
+  height: 100%;
   position: absolute;
   z-index: 10;
   display: flex;
-  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  cursor: pointer;
+`;
+
+const InfoText = styled.p`
+  color: ${Colors.White};
+  font-family: germania-one, sans-serif;
 `;
 
 const StyledButton = styled.button`
@@ -89,15 +101,13 @@ const StyledButton = styled.button`
   }
 `;
 
-const MoreInfo = () => <StyledButton outline>More Info</StyledButton>;
+const MoreInfo = () => <InfoText>More Info</InfoText>;
 
-const AddCart = () => <StyledButton>Add To Cart</StyledButton>;
-
-const Product = ({ img, title, price }) => {
+const Product = ({ id, img, title, price, addToCart, noButton }) => {
   return (
     <ProductWrapper>
       <ProductImageWrapper>
-        <ProductImage src={img} alt="product image" />
+        <ProductImage src={img} alt={`image of ${title}`} />
 
         <ProductOverlay>
           <ActionWrapper>
@@ -109,12 +119,26 @@ const Product = ({ img, title, price }) => {
       <ProductFooter>
         <ProductInfo>
           <ProductTitle>{title}</ProductTitle>
-          <ProductPrice>{price}</ProductPrice>
+          <ProductPrice>${price}</ProductPrice>
         </ProductInfo>
-        <AddCart />
+        {noButton ? null : (
+          <StyledButton
+            onClick={() => {
+              addToCart(id);
+            }}
+          >
+            Add To Cart
+          </StyledButton>
+        )}
       </ProductFooter>
     </ProductWrapper>
   );
 };
 
-export default Product;
+Product.propTypes = {
+  addToCart: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps, { addToCart })(Product);

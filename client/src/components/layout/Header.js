@@ -177,7 +177,7 @@ const Header = props => {
                   <ListLink exact to="/cart" activeClassName="is-active">
                     Cart
                   </ListLink>
-                  <ItemIndicator>0</ItemIndicator>
+                  <ItemIndicator>{props.cartTotal}</ItemIndicator>
                 </CartWrapper>
               </ListItem>
             </List>
@@ -189,7 +189,8 @@ const Header = props => {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  cartTotal: state.cart.cartTotal
 });
 
 export default connect(mapStateToProps, { logoutUser })(withRouter(Header));

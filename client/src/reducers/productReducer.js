@@ -1,8 +1,15 @@
-import { GET_PRODUCTS, PRODUCTS_LOADING } from "../actions/types";
+import {
+  GET_PRODUCTS,
+  PRODUCTS_LOADING,
+  GET_PRODUCT_FILTERS,
+  SET_CURRENT_FILTER
+} from "../actions/types";
 
 const initialState = {
   products: [],
   productsLoading: false
+  // productFilters: [],
+  // currentFilter: ""
 };
 
 export default function(state = initialState, action) {

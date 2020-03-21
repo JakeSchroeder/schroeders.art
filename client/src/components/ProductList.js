@@ -12,7 +12,8 @@ const ProductList = ({ productsToShow }) => {
     <ProductListWrapper>
       {productsToShow.map(product => (
         <Product
-          key={product._id}
+          key={product.id}
+          id={product.id}
           img={product.img_src}
           title={product.title}
           price={product.price}

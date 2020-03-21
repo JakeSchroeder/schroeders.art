@@ -18,6 +18,7 @@ import Register from "./components/auth/Register";
 import Privacy from "./components/Privacy";
 import Help from "./components/Help";
 import Art from "./components/art/Art";
+import ProductView from "./components/ProductView";
 import Cart from "./components/Cart";
 
 import ScrollToTop from "./components/layout/ScrollToTop";
@@ -123,6 +124,7 @@ function App() {
         <Layout>
           <Switch>
             <Route exact path="/" component={Art} />
+            {/* <Route exact path="/product/:id" component={ProductView} /> */}
             <Route exact path="/about" component={About} />
             <Route exact path="/contact" component={Contact} />
             <Route exact path="/privacy" component={Privacy} />
