@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import styled from "styled-components";
 // import test_src from "../img/painting1.png";
+import useCurrencyFormat from "../hooks/useCurrencyFormat";
 import Colors from "./utils/Colors";
 import { addToCart } from "../actions/cartActions";
 const ProductWrapper = styled.div`
@@ -119,7 +120,7 @@ const Product = ({ id, img, title, price, addToCart, noButton }) => {
       <ProductFooter>
         <ProductInfo>
           <ProductTitle>{title}</ProductTitle>
-          <ProductPrice>${price}</ProductPrice>
+          <ProductPrice>{useCurrencyFormat(price)}</ProductPrice>
         </ProductInfo>
         {noButton ? null : (
           <StyledButton

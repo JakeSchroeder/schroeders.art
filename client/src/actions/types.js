@@ -8,8 +8,8 @@ export const GET_PRODUCTS = "GET_PRODUCTS";
 export const PRODUCTS_LOADING = "PRODUCTS_LOADING";
 
 //Filter Collection
-// export const GET_PRODUCT_FILTERS = "GET_FILTERS";
-// export const SET_CURRENT_FILTER = "SET_CURRENT_FILTER";
+export const GET_PRODUCT_FILTERS = "GET_FILTERS";
+export const SET_CURRENT_FILTER = "SET_CURRENT_FILTER";
 
 //Cart
 export const ADD_TO_CART = "ADD_TO_CART";

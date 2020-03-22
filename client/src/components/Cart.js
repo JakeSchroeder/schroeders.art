@@ -1,9 +1,17 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
+import useCurrencyFormat from "../hooks/useCurrencyFormat";
 import Colors from "./utils/Colors";
+
+import {
+  subtractQuantity,
+  addQuantity,
+  removeItem
+} from "../actions/cartActions";
 
 import Product from "./Product";
 
@@ -16,6 +24,14 @@ const UserWrapper = styled.div`
 
 const UserTitle = styled.h1``;
 
+const BackToShopping = styled(Link)`
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 const CartView = styled.div`
   width: 100%;
   padding: 32px;
@@ -25,6 +41,78 @@ const CartView = styled.div`
 
 const ProductWrapper = styled.div`
   max-width: 300px;
+  position: relative;
+`;
+
+const ProductCartWrapper = styled.div`
+  min-width: 300px;
+
+  /* border: 1px solid #b72a2a; */
+
+  padding-left: 32px;
+  padding-right: 32px;
+`;
+
+const ProductFooter = styled.div`
+  /* height: 40px; */
+  width: 100%;
+  /* border-top: 1px solid #554848; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding: 8px 0;
+`;
+
+const ProductInfo = styled.div``;
+
+const ProductTitle = styled.p``;
+
+const ProductPrice = styled.p`
+  color: #b72a2a;
+`;
+
+const ProductImageWrapper = styled.div`
+  position: relative;
+  border: 18px solid ${Colors.Gray};
+  box-shadow: -4px 4px 8px -2px rgba(0, 0, 0, 0.77);
+  /* cursor: pointer; */
+`;
+
+const ProductImage = styled.img`
+  display: block;
+  width: 100%;
+`;
+
+const ProductDelete = styled.button`
+  position: absolute;
+  top: -8.75px;
+  right: -8.75px;
+  width: 35px;
+  height: 35px;
+  z-index: 999;
+  background: ${Colors.Primary};
+`;
+
+const ProductQuantity = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const ProductQuantityAmount = styled.p`
+  padding-left: 16px;
+  padding-right: 16px;
+`;
+
+const IncrementQuantity = styled.button`
+  width: 35px;
+  background: ${Colors.Primary};
+  height: 35px;
+`;
+const DecrementQuantity = styled.button`
+  width: 35px;
+  background: ${Colors.Primary};
+  height: 35px;
 `;
 
 const TotalCost = styled.h1``;
@@ -65,35 +153,93 @@ const Cart = props => {
     return str.join(" ");
   }
 
+  function setCurrencyFormat(value) {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD"
+    }).format(value);
+  }
+
   return (
     <>
-      <UserTitle>
-        {name ? `${capitalizeName(name)}'s Cart` : `Guest Cart`}
-      </UserTitle>
+      <UserWrapper>
+        <UserTitle>
+          {name ? `${capitalizeName(name)}'s Cart` : `Guest Cart`}
+        </UserTitle>
+        <BackToShopping to="/">Continue Shopping</BackToShopping>
+      </UserWrapper>
       <CartView>
         {props.cart.cartTotal > 0 ? (
           props.cart.cartProducts.map(product => (
-            <ProductWrapper>
-              <Product
-                key={product.id}
-                id={product.id}
-                img={product.img_src}
-                title={product.title}
-                price={product.price}
-                noButton
-              />
-            </ProductWrapper>
+            <ProductCartWrapper>
+              <ProductWrapper>
+                <ProductDelete
+                  onClick={() => {
+                    props.removeItem(product.productToAdd.id);
+                  }}
+                >
+                  x
+                </ProductDelete>
+                <ProductImageWrapper>
+                  <ProductImage
+                    src={product.productToAdd.img_src}
+                    alt={`image of ${product.title}`}
+                  />
+
+                  {/* <ProductOverlay>
+                    <ActionWrapper>
+                      <MoreInfo />
+                    </ActionWrapper>
+                  </ProductOverlay> */}
+                </ProductImageWrapper>
+
+                <ProductFooter>
+                  <ProductInfo>
+                    <ProductTitle>{product.productToAdd.title}</ProductTitle>
+                    <ProductPrice>
+                      {setCurrencyFormat(product.productToAdd.price)}
+                    </ProductPrice>
+                  </ProductInfo>
+                  <ProductQuantity>
+                    <IncrementQuantity
+                      onClick={() => {
+                        props.addQuantity(product.productToAdd.id);
+                      }}
+                    >
+                      +
+                    </IncrementQuantity>
+                    <ProductQuantityAmount>
+                      {product.quantity || 1}
+                    </ProductQuantityAmount>
+                    <DecrementQuantity
+                      onClick={() => {
+                        props.subtractQuantity(product.productToAdd.id);
+                      }}
+                    >
+                      -
+                    </DecrementQuantity>
+                  </ProductQuantity>
+                </ProductFooter>
+              </ProductWrapper>
+            </ProductCartWrapper>
           ))
         ) : (
           <>No Items In Cart</>
         )}
       </CartView>
       <CheckoutWrapper>
-        <TotalCost>Cart Total: $400.00</TotalCost>
+        <TotalCost>
+          Cart Total: {useCurrencyFormat(props.cart.cartCostTotal)}
+        </TotalCost>
         <Checkout>Checkout</Checkout>
       </CheckoutWrapper>
     </>
   );
+};
+
+Cart.propTypes = {
+  subtractQuantity: PropTypes.func.isRequired,
+  addQuantity: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -101,4 +247,8 @@ const mapStateToProps = state => ({
   cart: state.cart
 });
 
-export default connect(mapStateToProps)(withRouter(Cart));
+export default connect(mapStateToProps, {
+  subtractQuantity,
+  addQuantity,
+  removeItem
+})(Cart);
