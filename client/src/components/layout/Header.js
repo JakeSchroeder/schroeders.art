@@ -1,8 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import { connect } from "react-redux";
-import { NavLink, withRouter } from "react-router-dom";
-import { logoutUser } from "../../actions/authActions";
+import { connect, useSelector, useDispatch } from "react-redux";
+import {
+  selectShoppingCartCount,
+  selectCartTotalWithQuantity,
+  bananaselector
+} from "../../services/cart/cartSlice";
+
+import { NavLink, useHistory } from "react-router-dom";
+// import { logoutUser } from "../../services/auth/actions";
 
 import logo_src from "../../img/logo.png";
 
@@ -115,11 +121,9 @@ const ItemIndicator = styled.div`
 `;
 
 const Header = props => {
-  const onLogout = e => {
-    e.preventDefault();
-    props.logoutUser(props.history);
-    window.location.href = "/";
-  };
+  const dispatch = useDispatch();
+  const itemsInCart = useSelector(selectCartTotalWithQuantity);
+  const history = useHistory();
 
   return (
     <HeaderWrapper>
@@ -153,7 +157,7 @@ const Header = props => {
         <RightNav>
           <Nav>
             <List>
-              {props.auth.isAuthenticated ? (
+              {/* {props.auth.isAuthenticated ? (
                 <ListItem>
                   <ListLink
                     exact
@@ -165,19 +169,21 @@ const Header = props => {
                   </ListLink>
                 </ListItem>
               ) : (
-                <ListItem>
-                  <ListLink exact to="/login" activeClassName="is-active">
-                    Login
-                  </ListLink>
-                </ListItem>
-              )}
+              
+              )} */}
+
+              <ListItem>
+                <ListLink exact to="/login" activeClassName="is-active">
+                  Login
+                </ListLink>
+              </ListItem>
 
               <ListItem>
                 <CartWrapper>
                   <ListLink exact to="/cart" activeClassName="is-active">
                     Cart
                   </ListLink>
-                  <ItemIndicator>{props.cartTotal}</ItemIndicator>
+                  <ItemIndicator>{itemsInCart}</ItemIndicator>
                 </CartWrapper>
               </ListItem>
             </List>
@@ -188,9 +194,11 @@ const Header = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  cartTotal: state.cart.cartTotal
-});
+// const onLogout = e => {
+//   e.preventDefault();
+//   dispatch(logoutUser(props.history));
+//   // Note: your private route business should handle this
+//   history.push("/");
+// };
 
-export default connect(mapStateToProps, { logoutUser })(withRouter(Header));
+export default Header;

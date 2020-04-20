@@ -5,20 +5,20 @@ const Schema = mongoose.Schema;
 const ProductSchema = new Schema({
   img_src: {
     type: String,
-    required: true
+    required: false,
   },
   title: {
     type: String,
-    required: true
+    required: true,
   },
   price: {
     type: Number,
-    required: true
+    required: true,
   },
   description: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 module.exports = Product = mongoose.model("products", ProductSchema);

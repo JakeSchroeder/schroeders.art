@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { registerUser } from "../../actions/authActions";
+// import { connect } from "react-redux";
+// import { registerUser } from "../../services/auth/actions";
 
 import useInput from "../../hooks/useInput";
 
@@ -14,10 +14,10 @@ import {
   StyledErrors,
   StyledNavLink,
   AuthTitle,
-  AuthDescription
+  AuthDescription,
 } from "../utils/FormElements";
 
-const Register = props => {
+const Register = (props) => {
   const [firstName, firstNameInput] = useInput({ type: "text" });
   const [lastName, lastNameInput] = useInput({ type: "text" });
   const [email, emailInput] = useInput({ type: "email" });
@@ -31,33 +31,33 @@ const Register = props => {
   //   errors: {}
   // });
 
-  useEffect(() => {
-    if (props.auth.isAuthenticated) {
-      props.history.push("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (props.auth.isAuthenticated) {
+  //     props.history.push("/");
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    if (props.errors) {
-      updateErrors(props.errors);
-      console.log(errors);
-    }
-  }, [props.errors]);
+  // useEffect(() => {
+  //   if (props.errors) {
+  //     updateErrors(props.errors);
+  //     console.log(errors);
+  //   }
+  // }, [props.errors]);
 
-  const onSubmit = e => {
-    e.preventDefault();
+  // const onSubmit = e => {
+  //   e.preventDefault();
 
-    const newUser = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password
-    };
+  //   const newUser = {
+  //     firstName: firstName,
+  //     lastName: lastName,
+  //     email: email,
+  //     password: password
+  //   };
 
-    console.log(newUser);
+  //   console.log(newUser);
 
-    props.registerUser(newUser, props.history);
-  };
+  //   props.registerUser(newUser, props.history);
+  // };
 
   return (
     <>
@@ -65,7 +65,7 @@ const Register = props => {
       <AuthDescription>
         Save your shipping details, track order, recieve promocodes.
       </AuthDescription>
-      <StyledForm noValidate onSubmit={onSubmit}>
+      <StyledForm>
         <StyledInputWrapper horizontal>
           <StyledInputWrapper nmB ymR>
             <StyledLabel htmlFor="firstName">First Name</StyledLabel>
@@ -99,15 +99,17 @@ const Register = props => {
   );
 };
 
-Register.propTypes = {
-  registerUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object
-};
+// Register.propTypes = {
+//   registerUser: PropTypes.func.isRequired,
+//   auth: PropTypes.object.isRequired,
+//   errors: PropTypes.object
+// };
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
-});
+// const mapStateToProps = state => ({
+//   auth: state.auth,
+//   errors: state.errors
+// });
 
-export default connect(mapStateToProps, { registerUser })(withRouter(Register));
+// export default connect(mapStateToProps, { registerUser })(withRouter(Register));
+
+export default Register;

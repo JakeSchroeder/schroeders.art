@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { loginUser } from "../../actions/authActions";
+// import { loginUser } from "../../services/auth/actions";
 import useInput from "../../hooks/useInput";
 import {
   StyledSubmitButton,
@@ -12,31 +12,31 @@ import {
   StyledErrors,
   StyledNavLink,
   AuthTitle,
-  AuthDescription
+  AuthDescription,
 } from "../utils/FormElements";
 
-const Login = props => {
+const Login = (props) => {
   const [email, emailInput] = useInput({ type: "email" });
   const [password, passwordInput] = useInput({ type: "password" });
   const [errors, updateErrors] = useState({});
 
-  useEffect(() => {
-    if (props.auth.isAuthenticated) {
-      props.history.push("/");
-    }
+  // useEffect(() => {
+  //   if (props.auth.isAuthenticated) {
+  //     props.history.push("/");
+  //   }
 
-    if (props.errors) {
-      updateErrors(props.errors);
-      console.log(errors);
-    }
-  }, [props.errors, props.auth.isAuthenticated]);
+  //   if (props.errors) {
+  //     updateErrors(props.errors);
+  //     console.log(errors);
+  //   }
+  // }, [props.errors, props.auth.isAuthenticated]);
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
     const userData = {
       email: email,
-      password: password
+      password: password,
     };
 
     props.loginUser(userData);
@@ -76,15 +76,16 @@ const Login = props => {
   );
 };
 
-Login.propTypes = {
-  loginUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object
-};
+// Login.propTypes = {
+//   loginUser: PropTypes.func.isRequired,
+//   auth: PropTypes.object.isRequired,
+//   errors: PropTypes.object
+// };
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
-});
+// const mapStateToProps = state => ({
+//   auth: state.auth,
+//   errors: state.errors
+// });
 
-export default connect(mapStateToProps, { loginUser })(Login);
+// export default connect(mapStateToProps, { loginUser })(Login);
+export default Login;

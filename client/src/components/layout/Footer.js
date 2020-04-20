@@ -7,6 +7,10 @@ const FooterWrapper = styled.div`
   height: 200px;
   background: ${Colors.Primary};
   border-top: 1px solid ${Colors.Border};
+
+  @media (max-width: 776px) {
+    height: auto;
+  }
 `;
 
 const FooterInner = styled.div`
@@ -18,12 +22,22 @@ const FooterInner = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 100%;
+
+  @media (max-width: 776px) {
+    padding: 32px 0;
+
+    flex-direction: column;
+  }
 `;
 
 const Nav = styled.nav``;
 
 const List = styled.ul`
   display: flex;
+
+  @media (max-width: 776px) {
+    text-align: center;
+  }
 `;
 
 const ListItem = styled.li`
@@ -33,7 +47,19 @@ const ListItem = styled.li`
   list-style: none;
   /* margin-top: ${({ mt }) => (mt ? `8px` : 0)};
   padding-top: ${({ pt }) => (pt ? `16px` : 0)}; */
+  &:last-child {
+    margin-right: 0;
 
+    
+  }
+
+  @media (max-width: 776px) {
+    margin: 0;
+    padding-bottom: 16px;
+    &:last-child{
+      padding-bottom: 0;
+    }
+  }
 
 /* 
   &.active {
@@ -60,52 +86,43 @@ const ListLink = styled(NavLink)`
   }
 `;
 
-const CopyRight = styled.p``;
+const CopyRight = styled.p`
+  padding-top: 16px;
+  padding-bottom: 16px;
+`;
 
 const Footer = () => (
   <FooterWrapper>
     <FooterInner>
-      <CopyRight>© Schroeders Art Inc. All rights reserved.</CopyRight>
-      <List>
-        <ListItem>
-          <ListLink exact to="/privacy" activeClassName="is-active">
-            Privacy Policy
-          </ListLink>
-        </ListItem>
-        <ListItem>
-          <ListLink exact to="/help" activeClassName="is-active">
-            Help
-          </ListLink>
-        </ListItem>
-        <ListItem>
-          <ListLink exact to="/about" activeClassName="is-active">
-            About
-          </ListLink>
-        </ListItem>
-        <ListItem>
-          <ListLink exact to="/contact" activeClassName="is-active">
-            Contact
-          </ListLink>
-        </ListItem>
-      </List>
-
-      <List>
-        <ListItem>
-          <ListLink exact to="/login" activeClassName="is-active">
-            Login
-          </ListLink>
-        </ListItem>
-        <ListItem>
-          <ListLink exact to="/register" activeClassName="is-active">
-            Register
-          </ListLink>
-        </ListItem>
-        <ListItem>
-          <ListLink exact to="/">
-            Track Order
-          </ListLink>
-        </ListItem>
-      </List>
+      <Nav>
+        <List>
+          <ListItem>
+            <ListLink exact to="/privacy" activeClassName="is-active">
+              Privacy Policy
+            </ListLink>
+          </ListItem>
+          <ListItem>
+            <ListLink exact to="/help" activeClassName="is-active">
+              Help
+            </ListLink>
+          </ListItem>
+        </List>
+      </Nav>
+      <CopyRight>© Schroeders Art Inc.</CopyRight>
+      <Nav>
+        <List>
+          <ListItem>
+            <ListLink exact to="/login" activeClassName="is-active">
+              Login
+            </ListLink>
+          </ListItem>
+          <ListItem>
+            <ListLink exact to="/register" activeClassName="is-active">
+              Register
+            </ListLink>
+          </ListItem>
+        </List>
+      </Nav>
     </FooterInner>
   </FooterWrapper>
 );
